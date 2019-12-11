@@ -18,130 +18,130 @@ import java.util.List;
 public class youxihuamian extends GridLayout {
 
     private youxidongzuo youxi;
-    private static youxihuamian gview;
-    private float startX, startY, endX, endY, offX, offY;
-    private int row = 4, colunm = 4;// 行row对应y，列colunm对应x,默认开始都为4
-    private kapianshitu[][] cardsMap = new kapianshitu[10][10];// 用一个二维数组来存
-    private List<Point> emptyPoints = new ArrayList<Point>();// 链表方便增加删除
+    private static youxihuamian gshitu;
+    private float qishiX, qishiY, jieshuX, jieshuY, guanbiX, guanbiY;
+    private int hang = 4, lie = 4;// 行row对应y，列colunm对应x,默认开始都为4
+    private kapianshitu[][] kapianditu = new kapianshitu[10][10];// 用一个二维数组来存
+    private List<Point> kongfen = new ArrayList<Point>();// 链表方便增加删除
     // 在xml中能够访问则要添加构造方法
     // 以防万一三个构造方法都要写:对应参分别为上下文，属性，样式
-    public youxihuamian(Context context) {
-        super(context);
+    public youxihuamian(Context yujing) {
+        super(yujing);
         //initGameView();
-        gview = this;
+        gshitu = this;
     }
 
-    public youxihuamian(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public youxihuamian(Context yujing, AttributeSet shuxing) {
+        super(yujing, shuxing);
 //        initGameView();
-        gview = this;
+        gshitu = this;
     }
 
-    public youxihuamian(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    public youxihuamian(Context yujing, AttributeSet shuxing, int deffengge) {
+        super(yujing, shuxing, deffengge);
 //        initGameView();
-        gview = this;
+        gshitu = this;
     }
 
-    public static youxihuamian getGameView() {
-        return gview;
+    public static youxihuamian dedaoyouxijiazhi() {
+        return gshitu;
     }
 
     // 由于手机可能不同，我们需要动态地获取卡片的宽高，所以要重写下面这个方法获取当前布局的宽高，
     // 为了让手机不会因倒过来改变宽高，要去mainifest里配置
     // 只会在手机里第一次运行的时候执行，之后不会改变
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
+    protected void onSizeChanged(int d, int i, int laod, int laoi) {
+        super.onSizeChanged(d, i, laod, laoi);
     }
 
 
-    public void startGame() {
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
-                cardsMap[x][y].setNum(0);
+    public void kaishiyouxi() {
+        for (int d = 0; d < 4; d++) {
+            for (int i = 0; i < 4; i++) {
+                kapianditu[i][d].shezhishuzi(0);
             }
         }
-        addRandomNum();
-        addRandomNum();
-        youxi.initScore();
+        tianjiasuijishu();
+        tianjiasuijishu();
+        youxi.chushifenshu();
     }
 
-    private void addCards() {
+    private void tianjiakapian() {
         //获取屏幕宽度
         DisplayMetrics displayMetrics;
         displayMetrics = getResources().getDisplayMetrics();
-        int width=displayMetrics.widthPixels;
-        int cardWidth=(width-20)/4;
+        int kuandu=displayMetrics.widthPixels;
+        int kapiankuandu=(kuandu-20)/4;
         kapianshitu c;
         //cw = cardWidth;
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
+        for (int d = 0; d < 4; d++) {
+            for (int i = 0; i < 4; i++) {
                 c = new kapianshitu(getContext());
                 // 先都初始画0号图片
-                c.setNum(0);
-                addView(c,cardWidth,cardWidth);
+                c.shezhishuzi(0);
+                addView(c,kapiankuandu,kapiankuandu);
                 // 把所有的卡片都记录下来
-                cardsMap[x][y] = c;
+                kapianditu[i][d] = c;
             }
         }
     }
 
     // 添加随机数的时候要先遍历
-    private void addRandomNum() {
-        emptyPoints.clear();
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
-                if (cardsMap[x][y].getNum() <= 0) {
-                    emptyPoints.add(new Point(x, y));// 把空位给emptypoints链表
+    private void tianjiasuijishu() {
+        kongfen.clear();
+        for (int d = 0; d < 4; d++) {
+            for (int i = 0; i < 4; i++) {
+                if (kapianditu[i][d].dedaoshuzu() <= 0) {
+                    kongfen.add(new Point(i, d));// 把空位给emptypoints链表
                 }
             }
         }
         // 随机把emptyPoints中的一个赋值，生成2的概率为9,4为1
-        Point p = emptyPoints.remove((int) (Math.random() * emptyPoints.size()));
+        Point k = kongfen.remove((int) (Math.random() * kongfen.size()));
         // 2号图片和4号图片
-        cardsMap[p.x][p.y].setNum(Math.random() > 0.1 ? 2 : 4);
+        kapianditu[k.x][k.y].shezhishuzi(Math.random() > 0.1 ? 2 : 4);
     }
 
     public void initGameView() {
         youxi = (youxidongzuo) this.getContext();
         setColumnCount(4);// 设置表格为4列
-        addCards();// 把参数传过去
-        startGame();
+        tianjiakapian();// 把参数传过去
+        kaishiyouxi();
         setBackgroundColor(0xffccccff);
         setOnTouchListener(new OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();// 获取触屏的动作
-                switch (action) {
+                int dongzuo = event.getAction();// 获取触屏的动作
+                switch (dongzuo) {
                     // 按下获取起始点
                     case MotionEvent.ACTION_DOWN:
-                        startX = event.getX();
-                        startY = event.getY();
+                        qishiX = event.getX();
+                        qishiY = event.getY();
                         break;
                     // 松开获取终止点，通过比较位移来判断滑动方向
                     // 要处理一下滑动偏的，看offx和offy哪个绝对值大就按照哪个来
                     case MotionEvent.ACTION_UP:
-                        endX = event.getX();
-                        endY = event.getY();
-                        offX = startX - endX;
-                        offY = startY - endY;
+                        jieshuX = event.getX();
+                        jieshuY = event.getY();
+                        guanbiX = qishiX - jieshuX;
+                        guanbiY = qishiY - jieshuY;
                         //判断 offx 与 offy 的绝对值大小
-                        if (Math.abs(offX) >= Math.abs(offY)) {
-                            if (offX >= 5){
-                                moveLeft();
+                        if (Math.abs(guanbiX) >= Math.abs(guanbiY)) {
+                            if (guanbiX >= 5){
+                                xiangzuoyidong();
                                 //System.out.println("left");
                             }
-                            else if (offX < -5) {
-                                moveRight();
+                            else if (guanbiX < -5) {
+                                xiangyouyidong();
                                 //System.out.println("right");
                             }
                         } else {
-                            if (offY >= 5) {
-                                moveUp();
+                            if (guanbiY >= 5) {
+                                xiangshangyidong();
                                 //System.out.println("up");
                             }
-                            else if (offY < -5) {
-                                moveDown();
+                            else if (guanbiY < -5) {
+                                xiangxiayidong();
                                 //System.out.println("down");
                             }
                         }
@@ -153,26 +153,26 @@ public class youxihuamian extends GridLayout {
         });
     }
 
-    private void moveLeft() {
-        boolean merge = false;
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
+    private void xiangzuoyidong() {
+        boolean hebing = false;
+        for (int d = 0; d < 4; d++) {
+            for (int i = 0; i < 4; i++) {
                 // 遍历当前位置的右边，如果有数字，如果当前位置没有数字，则合并到当前位置
-                for (int x1 = x + 1; x1 < 4; x1++) {
+                for (int d1 = i + 1; d1 < 4; d1++) {
                     // 每个右边的位置只判断执行一次
-                    if (cardsMap[x1][y].getNum() > 0) {
+                    if (kapianditu[d1][d].dedaoshuzu() > 0) {
 
-                        if (cardsMap[x][y].getNum() <= 0) {
-                            cardsMap[x][y].setNum(cardsMap[x1][y].getNum());
-                            cardsMap[x1][y].setNum(0);
+                        if (kapianditu[i][d].dedaoshuzu() <= 0) {
+                            kapianditu[i][d].shezhishuzi(kapianditu[d1][d].dedaoshuzu());
+                            kapianditu[d1][d].shezhishuzi(0);
 
-                            x--;// 填补空位后，还要再次判断有没相同的可以合并的
-                            merge = true;
+                            i--;// 填补空位后，还要再次判断有没相同的可以合并的
+                            hebing = true;
                             break;
-                        } else if (cardsMap[x][y].equals(cardsMap[x1][y])) {
-                            cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
-                            cardsMap[x1][y].setNum(0);
-                           youxi.addScore(cardsMap[x][y].getNum());
+                        } else if (kapianditu[i][d].dengyu(kapianditu[d1][d])) {
+                            kapianditu[i][d].shezhishuzi(kapianditu[i][d].dedaoshuzu() * 2);
+                            kapianditu[d1][d].shezhishuzi(0);
+                           youxi.tianjiafenshu(kapianditu[i][d].dedaoshuzu());
                             break;
                         }
                         break;
@@ -180,32 +180,32 @@ public class youxihuamian extends GridLayout {
                 }
             }
         }
-        if (merge) {
-            addRandomNum();
-            checkComplete();
+        if (hebing) {
+            tianjiasuijishu();
+            jianchawancheng();
         }
     }
 
-    private void moveRight() {
-        boolean merge = false;
-        for (int y = 0; y < 4; y++) {
-            for (int x = 4 - 1; x >= 0; x--) {
+    private void xiangyouyidong() {
+        boolean hebing = false;
+        for (int d = 0; d < 4; d++) {
+            for (int i = 4 - 1; i >= 0; i--) {
                 // 遍历当前位置的右边，如果有数字，如果当前位置没有数字，则合并到当前位置
-                for (int x1 = x - 1; x1 >= 0; x1--) {
+                for (int d1 = i - 1; d1 >= 0; d1--) {
                     // 每个右边的位置只判断执行一次
-                    if (cardsMap[x1][y].getNum() > 0) {
+                    if (kapianditu[d1][d].dedaoshuzu() > 0) {
 
-                        if (cardsMap[x][y].getNum() <= 0) {
-                            cardsMap[x][y].setNum(cardsMap[x1][y].getNum());
-                            cardsMap[x1][y].setNum(0);
-                            x++;// 填补空位后，还要再次判断有没相同的可以合并的
-                            merge = true;
+                        if (kapianditu[i][d].dedaoshuzu() <= 0) {
+                            kapianditu[i][d].shezhishuzi(kapianditu[d1][d].dedaoshuzu());
+                            kapianditu[d1][d].shezhishuzi(0);
+                            i++;// 填补空位后，还要再次判断有没相同的可以合并的
+                            hebing = true;
                             break;
-                        } else if (cardsMap[x][y].equals(cardsMap[x1][y])) {
-                            cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
-                            cardsMap[x1][y].setNum(0);
-                            youxi.addScore(cardsMap[x][y].getNum());
-                            merge = true;
+                        } else if (kapianditu[i][d].dengyu(kapianditu[d1][d])) {
+                            kapianditu[i][d].shezhishuzi(kapianditu[i][d].dedaoshuzu() * 2);
+                            kapianditu[d1][d].shezhishuzi(0);
+                            youxi.tianjiafenshu(kapianditu[i][d].dedaoshuzu());
+                            hebing = true;
                             break;
                         }
                         break;
@@ -213,96 +213,96 @@ public class youxihuamian extends GridLayout {
                 }
             }
         }
-        if (merge) {
-            addRandomNum();
-            checkComplete();
-        }
-
-    }
-
-    private void moveUp() {
-        boolean merge = false;
-        for (int x = 0; x < colunm; x++) {
-            for (int y = 0; y < row; y++) {
-                // 遍历当前位置的右边，如果有数字，如果当前位置没有数字，则合并到当前位置
-                for (int y1 = y + 1; y1 < row; y1++) {
-                    // 每个右边的位置只判断执行一次
-                    if (cardsMap[x][y1].getNum() > 0) {
-
-                        if (cardsMap[x][y].getNum() <= 0) {
-                            cardsMap[x][y].setNum(cardsMap[x][y1].getNum());
-                            cardsMap[x][y1].setNum(0);
-                            y--;// 填补空位后，还要再次判断有没相同的可以合并的
-                            merge = true;
-                            break;
-                        } else if (cardsMap[x][y].equals(cardsMap[x][y1])) {
-                            cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
-                            cardsMap[x][y1].setNum(0);
-                            youxi.addScore(cardsMap[x][y].getNum());
-                            merge = true;
-                            break;
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-        if (merge) {
-            addRandomNum();
-            checkComplete();
+        if (hebing) {
+            tianjiasuijishu();
+            jianchawancheng();
         }
 
     }
 
-    private void moveDown() {
-        boolean merge = false;
-        for (int x = 0; x < colunm; x++) {
-            for (int y = row - 1; y >= 0; y--) {
+    private void xiangshangyidong() {
+        boolean hebing = false;
+        for (int d = 0; d < lie; d++) {
+            for (int i = 0; i < hang; i++) {
                 // 遍历当前位置的右边，如果有数字，如果当前位置没有数字，则合并到当前位置
-                for (int y1 = y - 1; y1 >= 0; y1--) {
+                for (int i1 = i + 1; i1 < hang; i1++) {
                     // 每个右边的位置只判断执行一次
-                    if (cardsMap[x][y1].getNum() > 0) {
+                    if (kapianditu[d][i1].dedaoshuzu() > 0) {
 
-                        if (cardsMap[x][y].getNum() <= 0) {
-                            cardsMap[x][y].setNum(cardsMap[x][y1].getNum());
-                            cardsMap[x][y1].setNum(0);
-                            y++;// 填补空位后，还要再次判断有没相同的可以合并的
-                            merge = true;
+                        if (kapianditu[d][i].dedaoshuzu() <= 0) {
+                            kapianditu[d][i].shezhishuzi(kapianditu[d][i1].dedaoshuzu());
+                            kapianditu[d][i1].shezhishuzi(0);
+                            i--;// 填补空位后，还要再次判断有没相同的可以合并的
+                            hebing = true;
                             break;
-                        } else if (cardsMap[x][y].equals(cardsMap[x][y1])) {
-                            cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
-                            cardsMap[x][y1].setNum(0);
-                            youxi.addScore(cardsMap[x][y].getNum());
-                            merge = true;
+                        } else if (kapianditu[d][i].dengyu(kapianditu[d][i1])) {
+                            kapianditu[d][i].shezhishuzi(kapianditu[d][i].dedaoshuzu() * 2);
+                            kapianditu[d][i1].shezhishuzi(0);
+                            youxi.tianjiafenshu(kapianditu[d][i].dedaoshuzu());
+                            hebing = true;
                             break;
                         }
                         break;
                     }
                 }
             }
-        }if (merge) {
-            addRandomNum();
-            checkComplete();
+        }
+        if (hebing) {
+            tianjiasuijishu();
+            jianchawancheng();
+        }
+
+    }
+
+    private void xiangxiayidong() {
+        boolean hebing = false;
+        for (int d = 0; d < lie; d++) {
+            for (int i = hang - 1; i >= 0; i--) {
+                // 遍历当前位置的右边，如果有数字，如果当前位置没有数字，则合并到当前位置
+                for (int i1 = i - 1; i1 >= 0; i1--) {
+                    // 每个右边的位置只判断执行一次
+                    if (kapianditu[d][i1].dedaoshuzu() > 0) {
+
+                        if (kapianditu[d][i].dedaoshuzu() <= 0) {
+                            kapianditu[d][i].shezhishuzi(kapianditu[d][i1].dedaoshuzu());
+                            kapianditu[d][i1].shezhishuzi(0);
+                            i++;// 填补空位后，还要再次判断有没相同的可以合并的
+                            hebing = true;
+                            break;
+                        } else if (kapianditu[d][i].dengyu(kapianditu[d][i1])) {
+                            kapianditu[d][i].shezhishuzi(kapianditu[d][i].dedaoshuzu() * 2);
+                            kapianditu[d][i1].shezhishuzi(0);
+                            youxi.tianjiafenshu(kapianditu[d][i].dedaoshuzu());
+                            hebing = true;
+                            break;
+                        }
+                        break;
+                    }
+                }
+            }
+        }if (hebing) {
+            tianjiasuijishu();
+            jianchawancheng();
         }
 
     }
 
      //判断结束
-    private void checkComplete() {
-        int key= youxi.get_1();
-        boolean complete = true;
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
+    private void jianchawancheng() {
+        int yaoshi= youxi.degao1();
+        boolean wancheng = true;
+        for (int i = 0; i < 4; i++) {
+            for (int d = 0; d < 4; d++) {
 
 
-                if(cardsMap[x][y].getNum() == 4096 && key!=0){
+                if(kapianditu[d][i].dedaoshuzu() == 4096 && yaoshi!=0){
                     new AlertDialog.Builder(getContext())
                             .setTitle("와하하하하!")
                             .setMessage("승리")
                             .setPositiveButton("다시 시작", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    startGame();
+                                    kaishiyouxi();
                                 }
                             }).show();
                     break;
@@ -311,21 +311,21 @@ public class youxihuamian extends GridLayout {
             break;
         }
 
-        ALL: for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
+        quanbu: for (int i = 0; i < 4; i++) {
+            for (int d = 0; d < 4; d++) {
                 // 如果还有空位，或者四个方向上还有相同的
-                if (cardsMap[x][y].getNum() == 0
-                        || (x > 0 && cardsMap[x][y].equals(cardsMap[x - 1][y]))
-                        || (x < 3 && cardsMap[x][y].equals(cardsMap[x + 1][y]))
-                        || (y > 0 && cardsMap[x][y].equals(cardsMap[x][y - 1]))
-                        || (y < 3 && cardsMap[x][y].equals(cardsMap[x][y + 1]))) {
+                if (kapianditu[d][i].dedaoshuzu() == 0
+                        || (d > 0 && kapianditu[d][i].dengyu(kapianditu[d - 1][i]))
+                        || (d < 3 && kapianditu[d][i].dengyu(kapianditu[d + 1][i]))
+                        || (i > 0 && kapianditu[d][i].dengyu(kapianditu[d][i - 1]))
+                        || (i < 3 && kapianditu[d][i].dengyu(kapianditu[d][i + 1]))) {
 
-                    complete = false;
-                    break ALL;// 如果出现这种情况，跳出双重循环，只写一个break只能跳出当前循环
+                    wancheng = false;
+                    break quanbu;// 如果出现这种情况，跳出双重循环，只写一个break只能跳出当前循环
                 }
             }
         }
-        if (complete) {
+        if (wancheng) {
             new AlertDialog.Builder(getContext())
                     .setTitle("ㅠㅠㅠ")
                     .setMessage("게임 실폐")
@@ -334,7 +334,7 @@ public class youxihuamian extends GridLayout {
                                 @Override
                                 public void onClick(DialogInterface dialog,
                                                     int which) {
-                                    startGame();
+                                    kaishiyouxi();
                                 }
                             }).show();
         }

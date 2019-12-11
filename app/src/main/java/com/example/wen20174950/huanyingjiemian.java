@@ -11,8 +11,8 @@ import java.util.TimerTask;
 public class huanyingjiemian extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle baocunshilizhuangtai) {
+        super.onCreate(baocunshilizhuangtai);
         //去掉顶部标题
         getSupportActionBar().hide();
         //去掉最上面时间、电量等
@@ -22,21 +22,21 @@ public class huanyingjiemian extends AppCompatActivity {
 
 
         //界面跳转
-        skip();
+        tiaoguo();
     }
 
     //5秒后跳转到主界面
-    protected void skip(){
-        final Intent intent=new Intent(huanyingjiemian.this, youxidongzuo.class);
-        Timer timer=new Timer();
-        TimerTask timerTask=new TimerTask() {
+    protected void tiaoguo(){
+        final Intent yitu=new Intent(huanyingjiemian.this, youxidongzuo.class);
+        Timer jishiqi=new Timer();
+        TimerTask jishiqirenwu=new TimerTask() {
             @Override
             public void run() {
-                startActivity(intent);
+                startActivity(yitu);
                 finish();
             }
         };
-        timer.schedule(timerTask,1000*4);
+        jishiqi.schedule(jishiqirenwu,1000*4);
     }
 
 }
