@@ -297,7 +297,7 @@ public class youxihuamian extends GridLayout {
 
                 if(cardsMap[x][y].getNum() == 4096 && key!=0){
                     new AlertDialog.Builder(getContext())
-                            .setTitle("게임 상태")
+                            .setTitle("와하하하하!")
                             .setMessage("승리")
                             .setPositiveButton("다시 시작", new DialogInterface.OnClickListener() {
                                 @Override
@@ -327,8 +327,8 @@ public class youxihuamian extends GridLayout {
         }
         if (complete) {
             new AlertDialog.Builder(getContext())
-                    .setTitle("게임 상태")
-                    .setMessage("게임중료")
+                    .setTitle("ㅠㅠㅠ")
+                    .setMessage("게임 실폐")
                     .setPositiveButton("다시 시작",
                             new DialogInterface.OnClickListener() {
                                 @Override
