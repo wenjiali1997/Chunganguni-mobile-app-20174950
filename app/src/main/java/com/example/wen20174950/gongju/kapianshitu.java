@@ -9,7 +9,6 @@ import com.example.wen20174950.R;
 public class kapianshitu extends FrameLayout {
 
     private int shuzi = 0;
-    // 只显示数字的话可以用Textview,要是用图片的话要用imview
     private ImageView tupian;
     private int[] tupianshuzu = new int[4100];
     private LayoutParams lp;
@@ -18,13 +17,12 @@ public class kapianshitu extends FrameLayout {
         super(yujing);
         fangtupian();
         tupian = new ImageView(getContext());
-        lp = new LayoutParams(-1, -1);// -1,-1就是填充完父类容器的意思
-        lp.setMargins(20, 20, 0, 0);// 用来设置边框很管用
-        addView(tupian, lp);// 把imageView加到CardView上
+        lp = new LayoutParams(-1, -1);
+        lp.setMargins(20, 20, 0, 0);
+        addView(tupian, lp);
         shezhishuzi(0);
     }
 
-    //把数字逻辑实现的2048转化为图片逻辑，只需要把数字定位数组序数，数字对应图片，并保持一一对应关系
     public void fangtupian() {
         tupianshuzu[0] = R.drawable.wu;
         tupianshuzu[2] = R.drawable.ha;
@@ -41,18 +39,15 @@ public class kapianshitu extends FrameLayout {
         tupianshuzu[4096]=R.drawable.fa;
     }
 
-    // 数字:数字相当于图片id
     public int dedaoshuzu() {
         return shuzi;
     }
 
     public void shezhishuzi(int shuzi) {
         this.shuzi = shuzi;
-        //将显示的数字改为图片
         tupian.setBackgroundResource(tupianshuzu[shuzi]);
     }
 
-    // 判断数字是否相同
     public boolean dengyu(kapianshitu jianli) {
         return dedaoshuzu() == jianli.dedaoshuzu();
     }
